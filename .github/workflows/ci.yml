@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      # The plugin bundles the language server; fetch it before building.
+      - name: Fetch the language server
+        run: npm install @mildastudio/milda-lsp
+      # Downloads IntelliJ IDEA Ultimate (bundles the LSP API module) for the build.
+      - run: ./gradlew test buildPlugin

@@ -1,0 +1,50 @@
+<idea-plugin>
+  <id>studio.milda.jetbrains</id>
+  <name>Milda</name>
+  <vendor url="https://milda.studio">Milda</vendor>
+
+  <description><![CDATA[
+    Language support for the <b>Milda</b> design-system DSL (<code>.milda</code>).
+    <br/><br/>
+    <b>Works out of the box:</b> syntax highlighting, file recognition and icon, and code
+    commenting — no external tools required.
+    <br/><br/>
+    <b>With the language server</b> (<code>@mildastudio/milda-lsp</code>, a Node.js process the
+    plugin launches): diagnostics, completion, hover documentation, go-to-definition, document
+    outline, and code folding. Install it in your project (<code>npm i -D @mildastudio/milda-lsp</code>)
+    or point to it in <i>Settings | Tools | Milda</i>.
+    <br/><br/>
+    The language-server features use the LSP API, available only in paid JetBrains IDEs
+    (IntelliJ IDEA Ultimate, WebStorm, PyCharm, GoLand, Rider, …), not in Community editions.
+  ]]></description>
+
+  <!-- The LSP API lives in the paid-IDE platform module. -->
+  <depends>com.intellij.modules.platform</depends>
+  <depends>com.intellij.modules.lsp</depends>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <platform.lsp.serverSupportProvider
+        implementation="studio.milda.lsp.MildaLspServerSupportProvider"/>
+
+    <!-- Native `.milda` language: no real grammar (the LSP does parsing/intelligence),
+         but a lexer-based syntax highlighter kept in parity with the LSP's TS classifier.
+         Gives native highlighting + a recognized file type (icon, spellcheck-off via the
+         empty comment/string token sets, plugin-advertiser). LSP layers the smarts. -->
+    <fileType name="Milda" language="Milda" extensions="milda"
+              implementationClass="studio.milda.lang.MildaFileType" fieldName="INSTANCE"/>
+    <lang.parserDefinition language="Milda"
+        implementationClass="studio.milda.lang.MildaParserDefinition"/>
+    <lang.syntaxHighlighterFactory language="Milda"
+        implementationClass="studio.milda.lang.MildaSyntaxHighlighterFactory"/>
+
+    <!-- The file icon (kept independent of the file type so it survives a rollback). -->
+    <fileIconProvider implementation="studio.milda.MildaFileIconProvider"/>
+
+    <applicationService serviceImplementation="studio.milda.lsp.MildaLspSettings"/>
+    <applicationConfigurable
+        parentId="tools"
+        id="studio.milda.lsp.settings"
+        instance="studio.milda.lsp.MildaLspConfigurable"
+        displayName="Milda"/>
+  </extensions>
+</idea-plugin>

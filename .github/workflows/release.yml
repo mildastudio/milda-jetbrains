@@ -1,0 +1,48 @@
+name: Release plugin
+
+# Builds, signs, and publishes the Milda plugin to the JetBrains Marketplace.
+# One-time setup (repo secrets): PUBLISH_TOKEN (Marketplace token), and the signing
+# trio CERTIFICATE_CHAIN / PRIVATE_KEY / PRIVATE_KEY_PASSWORD (generate per the JetBrains
+# "Plugin Signing" docs). The FIRST upload is manual (web UI) + moderation; after that,
+# publish by creating a GitHub Release (tag e.g. 1.2.3 or v1.2.3).
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Plugin version (e.g. 1.2.3)
+        required: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      # The plugin bundles the language server; fetch it so build.gradle.kts's
+      # `bundleServer` finds it under node_modules.
+      - name: Fetch the language server
+        run: npm install @mildastudio/milda-lsp
+
+      - name: Resolve version (strip a leading v)
+        id: v
+        run: |
+          RAW="${{ github.event.release.tag_name || inputs.version }}"
+          echo "version=${RAW#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Build, sign & publish
+        env:
+          CERTIFICATE_CHAIN: ${{ secrets.CERTIFICATE_CHAIN }}
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+          PRIVATE_KEY_PASSWORD: ${{ secrets.PRIVATE_KEY_PASSWORD }}
+          PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+        run: ./gradlew publishPlugin -PpluginVersion=${{ steps.v.outputs.version }}

@@ -1,0 +1,4 @@
+.gradle/
+build/
+# Bundled at build time from ../milda-lsp/dist (see build.gradle.kts `bundleServer`).
+src/main/resources/server/

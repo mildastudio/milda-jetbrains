@@ -9,10 +9,11 @@
     <b>Works out of the box:</b> syntax highlighting, file recognition and icon, and code
     commenting — no external tools required.
     <br/><br/>
-    <b>With the language server</b> (<code>@mildastudio/milda-lsp</code>, a Node.js process the
-    plugin launches): diagnostics, completion, hover documentation, go-to-definition, document
-    outline, and code folding. Install it in your project (<code>npm i -D @mildastudio/milda-lsp</code>)
-    or point to it in <i>Settings | Tools | Milda</i>.
+    <b>With its bundled language server</b> (<code>@mildastudio/milda-lsp</code>): diagnostics,
+    completion, hover documentation, go-to-definition, document outline, and code folding. The
+    server ships inside the plugin — you only need <b>Node.js</b> on your machine. To pin a
+    specific version, install it in your project (<code>npm i -D @mildastudio/milda-lsp</code>)
+    or set its path in <i>Settings | Tools | Milda</i>.
     <br/><br/>
     The language-server features use the LSP API, available only in paid JetBrains IDEs
     (IntelliJ IDEA Ultimate, WebStorm, PyCharm, GoLand, Rider, …), not in Community editions.

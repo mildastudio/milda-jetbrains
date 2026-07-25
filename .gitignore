@@ -1,4 +1,8 @@
 .gradle/
 build/
+# IntelliJ Platform Gradle Plugin caches (sandbox, layout index, downloaded IDE metadata).
+.intellijPlatform/
+# Kotlin compiler daemon caches / error logs.
+.kotlin/
 # Bundled at build time from ../milda-lsp/dist (see build.gradle.kts `bundleServer`).
 src/main/resources/server/

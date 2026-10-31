@@ -1,0 +1,32 @@
+foundations {
+  token brand   : color   = hex(3b82f6)
+  token pure    : color   = hex(fff)
+  token loud    : color   = hex(ABCDEF)
+  token soft    : color   = oklch(62% 0.19 256deg / 50%)
+  token nudge   : spacing = scaled(1.25)
+  token white   : color   = srgb(1 1 1)
+  token glass   : color   = srgb(1 1 1 0.8)
+  token vivid   : color   = oklch(0.62 0.19 256)
+  token wide    : color   = p3(1 0 0)
+  token tinted  : color   = hsl(210 1 0.5)
+  token legacy  : color   = raw "#00000000"
+  token space/2 : spacing = 8px
+  token gap/lg  : spacing = 0.5rem
+  token half    : spacing = 50%
+  token dur     : duration = 150ms
+  token slow    : duration = 2s
+  token w       : font-weight = 700
+  token stack   : font-family = raw "'Menlo', monospace"
+  token bg : color = alias by Size { S1 -> hex(ffffff); default -> oklch(0.15 0 0) }
+}
+
+component Toggle "two-state" {
+  archetype ToggleButton
+  props { on : boolean = false }
+  part root {
+    text.wrap wrap
+    slant italic
+    when on != false { fill accent.a7 }
+  }
+  motion on T.change = move(spring 150ms)
+}

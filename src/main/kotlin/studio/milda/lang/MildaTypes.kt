@@ -15,7 +15,19 @@ object MildaTypes {
     @JvmField val PROPERTY = MildaTokenType("PROPERTY")
     @JvmField val VARIABLE = MildaTokenType("VARIABLE")
     @JvmField val OPERATOR = MildaTokenType("OPERATOR")
+    @JvmField val DECLARATION = MildaTokenType("DECLARATION") // a name this file declares
     @JvmField val IDENTIFIER = MildaTokenType("IDENTIFIER") // filler (uncoloured)
+
+    // The paired punctuation gets its own token types - uncoloured like any other filler,
+    // but distinguishable, which is what MildaBraceMatcher needs to match a pair (and what
+    // makes the platform auto-insert the closing brace as you type the opening one).
+    @JvmField val LBRACE = MildaTokenType("LBRACE")
+    @JvmField val RBRACE = MildaTokenType("RBRACE")
+    @JvmField val LPAREN = MildaTokenType("LPAREN")
+    @JvmField val RPAREN = MildaTokenType("RPAREN")
+    @JvmField val LBRACKET = MildaTokenType("LBRACKET")
+    @JvmField val RBRACKET = MildaTokenType("RBRACKET")
+
     @JvmField val FILE = IFileElementType(MildaLanguage)
 
     // Map a scanner category to the IElementType the lexer/highlighter uses.
@@ -28,7 +40,14 @@ object MildaTypes {
         MildaHighlightScanner.PROPERTY -> PROPERTY
         MildaHighlightScanner.VARIABLE -> VARIABLE
         MildaHighlightScanner.OPERATOR -> OPERATOR
+        MildaHighlightScanner.DECLARATION -> DECLARATION
         MildaHighlightScanner.WHITESPACE -> TokenType.WHITE_SPACE
+        MildaHighlightScanner.LBRACE -> LBRACE
+        MildaHighlightScanner.RBRACE -> RBRACE
+        MildaHighlightScanner.LPAREN -> LPAREN
+        MildaHighlightScanner.RPAREN -> RPAREN
+        MildaHighlightScanner.LBRACKET -> LBRACKET
+        MildaHighlightScanner.RBRACKET -> RBRACKET
         else -> IDENTIFIER
     }
 }

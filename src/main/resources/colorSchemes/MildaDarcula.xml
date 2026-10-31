@@ -1,0 +1,21 @@
+<?xml version='1.0'?>
+<!-- Explicit colours for the two Milda categories whose platform fallbacks are the plain
+     foreground in dark schemes (CLASS_NAME / IDENTIFIER). Without these, a token's TYPE and a
+     token's NAME read exactly like the rest of the line, which is what made the language look
+     half-highlighted. Everything else inherits the scheme's own keyword/number/string/comment/
+     field colours, which are coloured everywhere.
+
+     Teal for what the language calls a type, warm gold for a name the author declared: two
+     hues that are distinct from Darcula's keyword orange, number blue and field purple. -->
+<list>
+  <option name="MILDA_TYPE">
+    <value>
+      <option name="FOREGROUND" value="4EC9B0"/>
+    </value>
+  </option>
+  <option name="MILDA_DECLARATION">
+    <value>
+      <option name="FOREGROUND" value="FFC66D"/>
+    </value>
+  </option>
+</list>

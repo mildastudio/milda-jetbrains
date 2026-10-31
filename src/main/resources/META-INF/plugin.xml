@@ -6,27 +6,32 @@
   <description><![CDATA[
     Language support for the <b>Milda</b> design-system DSL (<code>.milda</code>).
     <br/><br/>
-    <b>Works out of the box:</b> syntax highlighting, file recognition and icon, and code
-    commenting — no external tools required.
+    <b>Works in every JetBrains IDE:</b> syntax highlighting, file recognition and icon,
+    <i>New | Milda File</i> with a starter design system, line commenting, brace matching and
+    auto-closing, a colour swatch in the gutter next to every colour literal (click it to pick
+    another), and indentation you configure in <i>Settings | Editor | Code Style | Milda</i> -
+    no external tools required.
     <br/><br/>
     <b>With its bundled language server</b> (<code>@mildastudio/milda-lsp</code>): diagnostics,
-    completion, hover documentation, go-to-definition, document outline, and code folding. The
-    server ships inside the plugin — you only need <b>Node.js</b> on your machine. To pin a
+    completion that knows where in the language you are, argument hints for every colour and
+    length literal, hover documentation, go-to-definition, document outline, and code folding.
+    The server ships inside the plugin - you only need <b>Node.js</b> on your machine. To pin a
     specific version, install it in your project (<code>npm i -D @mildastudio/milda-lsp</code>)
     or set its path in <i>Settings | Tools | Milda</i>.
     <br/><br/>
-    The language-server features use the LSP API, available only in paid JetBrains IDEs
-    (IntelliJ IDEA Ultimate, WebStorm, PyCharm, GoLand, Rider, …), not in Community editions.
+    The language-server half needs the LSP API, which ships only in paid JetBrains IDEs
+    (IntelliJ IDEA Ultimate, WebStorm, PyCharm, GoLand, Rider, …). In a Community edition the
+    plugin still installs and everything above the fold still works.
   ]]></description>
 
-  <!-- The LSP API lives in the paid-IDE platform module. -->
   <depends>com.intellij.modules.platform</depends>
-  <depends>com.intellij.modules.lsp</depends>
+  <!-- OPTIONAL, and in its own descriptor, because the LSP API lives in the paid-IDE module:
+       a hard `depends` would make the platform reject the WHOLE plugin wherever that module is
+       absent, taking the native half (highlighting, braces, colour swatches, code style) down
+       with it in every Community edition. -->
+  <depends optional="true" config-file="milda-lsp.xml">com.intellij.modules.lsp</depends>
 
   <extensions defaultExtensionNs="com.intellij">
-    <platform.lsp.serverSupportProvider
-        implementation="studio.milda.lsp.MildaLspServerSupportProvider"/>
-
     <!-- Native `.milda` language: no real grammar (the LSP does parsing/intelligence),
          but a lexer-based syntax highlighter kept in parity with the LSP's TS classifier.
          Gives native highlighting + a recognized file type (icon, spellcheck-off via the
@@ -38,14 +43,54 @@
     <lang.syntaxHighlighterFactory language="Milda"
         implementationClass="studio.milda.lang.MildaSyntaxHighlighterFactory"/>
 
+    <!-- The colours, and where to change them. The two scheme files exist because the platform
+         fallbacks for a type name and a declared name are the plain foreground in most schemes:
+         without an explicit colour, half the language read as undifferentiated text. -->
+    <colorSettingsPage implementation="studio.milda.lang.MildaColorSettingsPage"/>
+    <additionalTextAttributes scheme="Darcula" file="colorSchemes/MildaDarcula.xml"/>
+    <additionalTextAttributes scheme="Default" file="colorSchemes/MildaDefault.xml"/>
+
+    <!-- Editing behaviour a reader expects from any language: matched + auto-inserted
+         braces, auto-closed quotes, Cmd+/ line commenting. -->
+    <lang.braceMatcher language="Milda" implementationClass="studio.milda.lang.MildaBraceMatcher"/>
+    <lang.quoteHandler language="Milda" implementationClass="studio.milda.lang.MildaQuoteHandler"/>
+    <lang.commenter language="Milda" implementationClass="studio.milda.lang.MildaCommenter"/>
+
+    <!-- Open the completion list when the caret ARRIVES in a block (typing `{`, or Enter inside
+         one). A popup opens only for a typed trigger character or on request, so landing in an
+         empty block - the moment a reader most wants to know what goes there - showed nothing.
+         The server cannot fix that: making the list appear is the client's half. -->
+    <typedHandler implementation="studio.milda.lang.MildaTypedAutoPopup"/>
+    <enterHandlerDelegate implementation="studio.milda.lang.MildaEnterAutoPopup"/>
+
+    <!-- Indentation: the formatter is the single implementation of the rule (one level per
+         open brace), so Enter, Tab, Reformat Code and the Code Style preview all agree, and
+         the page's indent options actually drive them. -->
+    <langCodeStyleSettingsProvider
+        implementation="studio.milda.lang.MildaCodeStyleSettingsProvider"/>
+    <lang.formatter language="Milda"
+        implementationClass="studio.milda.lang.MildaFormattingModelBuilder"/>
+
+    <!-- A colour swatch in the gutter next to every colour literal, with the platform's
+         colour picker behind it (the same treatment CSS gets). -->
+    <colorProvider implementation="studio.milda.lang.MildaColorProvider"/>
+
     <!-- The file icon (kept independent of the file type so it survives a rollback). -->
     <fileIconProvider implementation="studio.milda.MildaFileIconProvider"/>
 
-    <applicationService serviceImplementation="studio.milda.lsp.MildaLspSettings"/>
-    <applicationConfigurable
-        parentId="tools"
-        id="studio.milda.lsp.settings"
-        instance="studio.milda.lsp.MildaLspConfigurable"
-        displayName="Milda"/>
+    <!-- The template *New | Milda File* writes: a small but complete design system, so a new
+         file parses cleanly instead of starting as an empty buffer. -->
+    <internalFileTemplate name="Milda File"/>
   </extensions>
+
+  <actions>
+    <!-- Right-click a folder | New | Milda File. Anchored right after the platform's own
+         *New File* entry so it sits with the other "make me a file" actions. -->
+    <action id="Milda.NewFile"
+            class="studio.milda.lang.MildaCreateFileAction"
+            text="Milda File"
+            description="Create a new Milda design-system file">
+      <add-to-group group-id="NewGroup" anchor="after" relative-to-action="NewFile"/>
+    </action>
+  </actions>
 </idea-plugin>

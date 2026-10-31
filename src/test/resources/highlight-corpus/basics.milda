@@ -1,0 +1,23 @@
+# a line comment with words like ffffff and oklch that must NOT tokenize
+milda 0.1
+prelude 0.0.2
+
+context-group Size { S1 S2 S3 }
+
+component Button "Trigger an action" {
+  archetype Button
+  props {
+    size    : Size    = S2
+    loading : boolean = false
+    label   : string
+  }
+  events { click from A.invoke }
+  part root {
+    layout { stack row; gap space.2; align center }
+    fill accent.9
+    ink gray.12
+    corner radius.3
+    state hovered { fill accent.10 }
+    when size <= 2 { text text-size.1 }
+  }
+}

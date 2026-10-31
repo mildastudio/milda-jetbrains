@@ -1,0 +1,20 @@
+# Structural syntax words: slot arities, `of`, gate `active`, `state`, realize `drop`.
+# Context-aliased values (`alias by … default ->`) live on a token, so they are in
+# values.milda: a facet points at a token, and the token carries the alias.
+component Menu "a disclosure menu" {
+  archetype Menu
+  uses presentation as surface
+  gate surface active when open = true
+  requires portal
+  props { open : boolean = false }
+  part list {
+    slot many of content keyed-by id
+    inset space.2
+  }
+  part item {
+    slot optional
+    fill accent.9
+    state hover { fill accent.3 }
+  }
+  realize web { drop item }
+}

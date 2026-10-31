@@ -1,0 +1,15 @@
+<?xml version='1.0'?>
+<!-- The light-scheme half of MildaDarcula.xml: the same two categories, darkened enough to
+     read on white. -->
+<list>
+  <option name="MILDA_TYPE">
+    <value>
+      <option name="FOREGROUND" value="267F99"/>
+    </value>
+  </option>
+  <option name="MILDA_DECLARATION">
+    <value>
+      <option name="FOREGROUND" value="795E26"/>
+    </value>
+  </option>
+</list>

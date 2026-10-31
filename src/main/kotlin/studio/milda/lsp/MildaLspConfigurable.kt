@@ -5,7 +5,7 @@ import com.intellij.openapi.ui.DialogPanel
 import com.intellij.ui.dsl.builder.bindText
 import com.intellij.ui.dsl.builder.panel
 
-/** Settings | Tools | Milda — configure the Node runtime and server script path. */
+/** Settings | Tools | Milda - configure the Node runtime and server script path. */
 class MildaLspConfigurable : BoundConfigurable("Milda") {
     private val settings = MildaLspSettings.getInstance()
 

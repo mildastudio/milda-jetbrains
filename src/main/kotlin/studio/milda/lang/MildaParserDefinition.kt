@@ -17,7 +17,7 @@ class MildaFile(viewProvider: FileViewProvider) : PsiFileBase(viewProvider, Mild
 }
 
 // A flat PSI over the highlight lexer's tokens. No comment/string token sets are
-// declared, so the built-in spellchecker has nothing to check on `.milda` files — no
+// declared, so the built-in spellchecker has nothing to check on `.milda` files - no
 // "Typo" noise on hex colors / identifiers. (Highlighting is separate, via the
 // SyntaxHighlighterFactory.)
 class MildaParserDefinition : ParserDefinition {

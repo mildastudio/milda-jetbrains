@@ -1,4 +1,4 @@
-// Milda JetBrains plugin — thin launcher for the @mildastudio/milda-lsp language
+// Milda JetBrains plugin - thin launcher for the @mildastudio/milda-lsp language
 // server via the IntelliJ Platform LSP API.
 //
 // The LSP API (com.intellij.platform.lsp) ships ONLY in paid JetBrains IDEs, so this
@@ -76,7 +76,7 @@ intellijPlatform {
         token = providers.environmentVariable("PUBLISH_TOKEN")
     }
 
-    // `./gradlew verifyPlugin` runs the JetBrains Plugin Verifier. Target paid IDEs only —
+    // `./gradlew verifyPlugin` runs the JetBrains Plugin Verifier. Target paid IDEs only -
     // the plugin depends on the LSP module (com.intellij.modules.lsp), absent in Community.
     pluginVerification {
         ides {
@@ -100,7 +100,7 @@ tasks {
 }
 
 // Bundle the built language server into the plugin, so users only need Node.js on their
-// machine — no `npm install` of the server. The server dist is sourced from either the
+// machine - no `npm install` of the server. The server dist is sourced from either the
 // monorepo sibling (dev) or a `npm i @mildastudio/milda-lsp` install (standalone public
 // repo / release CI).
 val serverDistCandidates = listOf(

@@ -1,0 +1,18 @@
+<idea-plugin>
+  <!-- The language-server half of the plugin, loaded only where `com.intellij.modules.lsp`
+       exists (paid IDEs). Everything in here touches the LSP API - the provider that starts
+       the server, and the settings page that only makes sense once there is a server to
+       point at - so the platform can skip the lot in a Community edition without disabling
+       the plugin's native language support (see plugin.xml). -->
+  <extensions defaultExtensionNs="com.intellij">
+    <platform.lsp.serverSupportProvider
+        implementation="studio.milda.lsp.MildaLspServerSupportProvider"/>
+
+    <applicationService serviceImplementation="studio.milda.lsp.MildaLspSettings"/>
+    <applicationConfigurable
+        parentId="tools"
+        id="studio.milda.lsp.settings"
+        instance="studio.milda.lsp.MildaLspConfigurable"
+        displayName="Milda"/>
+  </extensions>
+</idea-plugin>

@@ -1,0 +1,38 @@
+milda 0.1
+
+meta {
+  name "${NAME}"
+  version "0.0.0"
+}
+
+# A design system starts with its foundations: the tokens everything else refers to.
+# A context group is what a token can vary BY - a colour scheme, a density, a platform.
+context-group ColorScheme {
+  Light
+  Dark
+}
+
+foundations {
+  token color/black : color = hex(000)
+  token color/white : color = hex(fff)
+
+  # One token, a value per context. Every context of the group needs a line, or a default.
+  token color/ink : color = alias by ColorScheme {
+    Light -> color.black
+    Dark -> color.white
+  }
+
+  token space/2 : spacing = 8px
+  token radius/2 : radius = 4px
+}
+
+# Components live beside the foundations and refer to them by name:
+#
+# component Badge "a small status label" {
+#   part root {
+#     kind container
+#     layout { stack row; gap space.2; align center }
+#     ink color.ink
+#     corner radius.2
+#   }
+# }

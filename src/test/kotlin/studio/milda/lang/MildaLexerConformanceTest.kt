@@ -16,7 +16,10 @@ class MildaLexerConformanceTest {
 
     @Test
     fun kotlinScannerMatchesTsGoldens() {
-        val dir = File("../milda-lsp/highlight-corpus")
+        // The monorepo reads the sibling `milda-lsp`, which is the source of truth. The standalone
+        // mirror has no sibling, so copybara ships the corpus into the test resources instead.
+        val dir = listOf(File("../milda-lsp/highlight-corpus"), File("src/test/resources/highlight-corpus"))
+            .firstOrNull { it.isDirectory } ?: File("../milda-lsp/highlight-corpus")
         assertTrue("corpus dir exists: ${dir.absolutePath}", dir.isDirectory)
         val files = dir.listFiles { f -> f.name.endsWith(".milda") }!!.sortedBy { it.name }
         assertTrue("corpus is non-empty", files.isNotEmpty())

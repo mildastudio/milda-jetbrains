@@ -4,7 +4,7 @@ JetBrains IDE support for the [Milda](https://github.com/mildastudio/milda-lang)
 design-system DSL (`.milda`).
 
 - **Works out of the box:** syntax highlighting, file recognition + icon, and code
-  commenting — no external tools required.
+  commenting - no external tools required.
 - **With the language server** ([`@mildastudio/milda-lsp`](https://github.com/mildastudio/milda-lsp),
   a Node.js process the plugin launches and bundles): diagnostics, completion, hover,
   go-to-definition, document outline, and folding.
@@ -15,7 +15,7 @@ IDEs (IntelliJ IDEA Ultimate, WebStorm, PyCharm, GoLand, Rider, …), not Commun
 ## Install
 
 From the JetBrains Marketplace: **Settings → Plugins → Marketplace → search "Milda"**.
-You only need **Node.js** on your machine — the language server ships inside the plugin.
+You only need **Node.js** on your machine - the language server ships inside the plugin.
 
 ## Build from source
 
@@ -33,7 +33,7 @@ sandbox IDE with `./gradlew runIde`.
 ## Highlighter ↔ server parity
 
 The native syntax highlighter is kept byte-for-byte in step with the language server's
-classifier via a shared corpus and golden tests — see the
+classifier via a shared corpus and golden tests - see the
 [`@mildastudio/milda-lsp`](https://github.com/mildastudio/milda-lsp) repo.
 
 ## License

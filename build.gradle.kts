@@ -40,8 +40,12 @@ dependencies {
         if (localIdePath != null) {
             local(localIdePath)
         } else {
-            // Any paid IDE >= 2023.2 works; Ultimate bundles the LSP API module.
-            intellijIdeaUltimate("2024.2")
+            // Ultimate bundles the LSP API module. 2026.1 is the floor the sources need: the
+            // descriptor turns the platform's semantic-token layer off through
+            // `LspCustomization`, which 2024.2's LSP API does not have yet, so a 2024.2
+            // target compiled nowhere but against a local 2026.1 IDE (red mirror CI from
+            // 2026-07-25 to 2026-11-02).
+            intellijIdeaUltimate("2026.1")
         }
 
         // If the compiler can't resolve `com.intellij.platform.lsp.api.*`, uncomment:
@@ -56,9 +60,12 @@ dependencies {
 intellijPlatform {
     pluginConfiguration {
         ideaVersion {
-            // 2023.2 is the first build with the LSP API; open-ended upper bound so the
-            // plugin keeps working on future IDEs (highlighting is native; LSP is stable).
-            sinceBuild = "232"
+            // 261 = 2026.1, the platform the plugin compiles against (see `dependencies`).
+            // The LSP API itself goes back to 2023.2, but `LspCustomization` does not, and a
+            // lower floor would install the plugin where its LSP half cannot load. Open-ended
+            // upper bound so the plugin keeps working on future IDEs (highlighting is native;
+            // the customization hook still resolves on 2026.2).
+            sinceBuild = "261"
             untilBuild = provider { null }
         }
     }

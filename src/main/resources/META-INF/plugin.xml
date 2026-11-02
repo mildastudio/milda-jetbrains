@@ -24,6 +24,20 @@
     plugin still installs and everything above the fold still works.
   ]]></description>
 
+  <change-notes><![CDATA[
+    <b>0.3.0</b>
+    <ul>
+      <li>The bundled language server speaks surface 0.10: padding on one axis or one edge -
+        <code>inset.inline</code>, <code>inset.block</code>, <code>inset.inline-start</code>,
+        <code>inset.inline-end</code>, <code>inset.block-start</code>, <code>inset.block-end</code>.
+        Edges are logical; <code>inset.left</code> is read with a warning that names the logical
+        word.</li>
+      <li>Surface 0.9: what a part is, said where it is named - <code>part Button: container {</code>.</li>
+      <li>Built for 2026.1 and later, the first platform whose LSP API has everything the plugin
+        uses.</li>
+    </ul>
+  ]]></change-notes>
+
   <depends>com.intellij.modules.platform</depends>
   <!-- OPTIONAL, and in its own descriptor, because the LSP API lives in the paid-IDE module:
        a hard `depends` would make the platform reject the WHOLE plugin wherever that module is

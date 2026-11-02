@@ -83,11 +83,20 @@ intellijPlatform {
         token = providers.environmentVariable("PUBLISH_TOKEN")
     }
 
-    // `./gradlew verifyPlugin` runs the JetBrains Plugin Verifier. Target paid IDEs only -
-    // the plugin depends on the LSP module (com.intellij.modules.lsp), absent in Community.
+    // `./gradlew verifyPlugin` runs the JetBrains Plugin Verifier - the same check the
+    // Marketplace runs on every upload, so a failure here is a rejection we can see first.
+    // `-PmildaVerifyIdes=/path/A.app,/path/B` verifies against those local IDEs (no download),
+    // which matters because the build target and the IDEs to check are different questions:
+    // build against the floor (2026.1), verify against the floor AND what users run today.
+    // Without it, `-PmildaIdePath` is checked; without either, the recommended set for the
+    // declared build range is downloaded.
+    val verifyIdes: List<String> =
+        providers.gradleProperty("mildaVerifyIdes").orNull
+            ?.split(',')?.map { it.trim() }?.filter { it.isNotEmpty() }
+            ?: listOfNotNull(localIdePath)
     pluginVerification {
         ides {
-            recommended()
+            if (verifyIdes.isEmpty()) recommended() else verifyIdes.forEach { local(it) }
         }
     }
 }

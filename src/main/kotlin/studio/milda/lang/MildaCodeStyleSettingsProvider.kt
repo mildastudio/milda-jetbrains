@@ -62,7 +62,7 @@ class MildaCodeStyleSettingsProvider : LanguageCodeStyleSettingsProvider() {
         // depths a reader cares about: a foundations token, and a component down to a
         // conditional facet inside a part.
         val SAMPLE = """
-            milda 0.1
+            milda 0.10
             prelude 0.0.2
 
             context-group Size { S1 S2 S3 }

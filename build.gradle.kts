@@ -104,6 +104,16 @@ tasks {
     buildSearchableOptions {
         enabled = false
     }
+
+    // The tests open `.milda` files in a real editor, and on open the platform instantiates
+    // EVERY registered LSP provider, not just ours. In 2026.1 the bundled Vue plugin's
+    // provider dies in a static-initialisation cycle of its own (`VueLspServerActivationRule`
+    // <-> `VueLspServerLoader`), and the test framework turns that logged error into a
+    // failure of whichever test was running - which it did on the Linux runner and not on a
+    // Mac, so it read as flaky. Vue is not under test; keep it out of the test IDE.
+    prepareTestSandbox {
+        disabledPlugins.add("org.jetbrains.plugins.vue")
+    }
 }
 
 // Bundle the built language server into the plugin, so users only need Node.js on their

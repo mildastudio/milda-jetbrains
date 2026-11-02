@@ -1048,5 +1048,59 @@
     "char": 35,
     "length": 5,
     "type": "number"
+  },
+  {
+    "line": 32,
+    "char": 2,
+    "length": 46,
+    "type": "comment"
+  },
+  {
+    "line": 33,
+    "char": 2,
+    "length": 4,
+    "type": "keyword"
+  },
+  {
+    "line": 33,
+    "char": 7,
+    "length": 5,
+    "type": "class"
+  },
+  {
+    "line": 33,
+    "char": 12,
+    "length": 1,
+    "type": "operator"
+  },
+  {
+    "line": 33,
+    "char": 14,
+    "length": 4,
+    "type": "type"
+  },
+  {
+    "line": 34,
+    "char": 4,
+    "length": 4,
+    "type": "keyword"
+  },
+  {
+    "line": 34,
+    "char": 9,
+    "length": 2,
+    "type": "keyword"
+  },
+  {
+    "line": 34,
+    "char": 20,
+    "length": 7,
+    "type": "keyword"
+  },
+  {
+    "line": 34,
+    "char": 35,
+    "length": 8,
+    "type": "string"
   }
 ]

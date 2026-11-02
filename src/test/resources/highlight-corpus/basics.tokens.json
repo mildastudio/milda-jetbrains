@@ -220,5 +220,59 @@
     "char": 26,
     "length": 11,
     "type": "property"
+  },
+  {
+    "line": 23,
+    "char": 2,
+    "length": 40,
+    "type": "comment"
+  },
+  {
+    "line": 24,
+    "char": 2,
+    "length": 4,
+    "type": "keyword"
+  },
+  {
+    "line": 24,
+    "char": 7,
+    "length": 5,
+    "type": "class"
+  },
+  {
+    "line": 24,
+    "char": 12,
+    "length": 1,
+    "type": "operator"
+  },
+  {
+    "line": 24,
+    "char": 14,
+    "length": 4,
+    "type": "type"
+  },
+  {
+    "line": 25,
+    "char": 4,
+    "length": 4,
+    "type": "keyword"
+  },
+  {
+    "line": 25,
+    "char": 9,
+    "length": 2,
+    "type": "keyword"
+  },
+  {
+    "line": 25,
+    "char": 20,
+    "length": 7,
+    "type": "keyword"
+  },
+  {
+    "line": 25,
+    "char": 35,
+    "length": 8,
+    "type": "string"
   }
 ]

@@ -52,8 +52,7 @@ class MildaColorSettingsPage : ColorSettingsPage {
 
         component Badge "a small status label" {
           props { label : string }
-          part root {
-            kind container
+          part root: container {
             layout { stack row; gap space.2 }
             ink color.text
             content bind ${'$'}label

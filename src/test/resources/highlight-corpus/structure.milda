@@ -1,4 +1,5 @@
-# Structural syntax words: slot arities, `of`, gate `active`, `state`, realize `drop`.
+# Structural syntax words: slot arities, `of`, gate `active`, `state`, realize `drop`, and the
+# part header: the kind after the colon reads as a type (0055).
 # Context-aliased values (`alias by … default ->`) live on a token, so they are in
 # values.milda: a facet points at a token, and the token carries the alias.
 component Menu "a disclosure menu" {
@@ -7,14 +8,20 @@ component Menu "a disclosure menu" {
   gate surface active when open = true
   requires portal
   props { open : boolean = false }
-  part list {
+  part list: container {
     slot many of content keyed-by id
     inset space.2
   }
-  part item {
+  part item: item {
     slot optional
     fill accent.9
     state hover { fill accent.3 }
   }
   realize web { drop item }
+
+  # Required by Menu, written unpainted.
+  part surface: container {}
+  part item.label: text {
+    slot of content default sample "Item"
+  }
 }

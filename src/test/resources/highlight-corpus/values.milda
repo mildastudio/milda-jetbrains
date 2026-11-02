@@ -29,4 +29,9 @@ component Toggle "two-state" {
     when on != false { fill accent.a7 }
   }
   motion on T.change = move(spring 150ms)
+
+  # Required by ToggleButton, written unpainted.
+  part label: text {
+    slot of content default sample "Toggle"
+  }
 }

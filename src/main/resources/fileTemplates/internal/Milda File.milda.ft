@@ -29,8 +29,7 @@ foundations {
 # Components live beside the foundations and refer to them by name:
 #
 # component Badge "a small status label" {
-#   part root {
-#     kind container
+#   part root: container {
 #     layout { stack row; gap space.2; align center }
 #     ink color.ink
 #     corner radius.2

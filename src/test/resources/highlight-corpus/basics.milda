@@ -20,4 +20,9 @@ component Button "Trigger an action" {
     state hovered { fill accent.10 }
     when size <= 2 { text text-size.1 }
   }
+
+  # Required by Button, written unpainted.
+  part label: text {
+    slot of content default sample "Button"
+  }
 }
